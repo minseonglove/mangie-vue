@@ -1,0 +1,60 @@
+/*서열표 기본 스타일 8개 한줄*/
+.grade{
+    display: flex;
+    margin: 18px 12px;
+}
+.gradeBox{
+    height: 100%;
+    margin: 0px 24px;
+}
+.levelBox{
+    display: grid;
+    grid-template-columns: repeat(8, 110px);
+}
+.thumbBox{
+    height: 130px;
+}
+.judgeBox{
+    position: relative;
+    width: 86px;
+    height: 24px;
+    bottom: 93px;
+    right: 11px;
+    background-color: #c4c4c4;
+    border: 0;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+}
+.sName{
+    position: relative;
+    border: 1px solid white;
+    z-index: 1;
+}
+.sLevel{
+    position: relative;
+    bottom: 68px;
+    right: 22px;
+    z-index: 2;
+}
+.sBorder{
+    position: relative;
+    bottom: 90px;
+    right: 11px;
+    z-index: 0;
+}
+.sDelete{
+    position: relative;
+    bottom: 90px;
+    z-index: 2;
+}
+.infoBox{
+    position: fixed;
+    width: 81px;
+    height: 81px;
+    overflow: hidden;
+    z-index: 999;
+    background-color: white;
+    opacity: 0.7;
+    font-size: 12px;
+}
