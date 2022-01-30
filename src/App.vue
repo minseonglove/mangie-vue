@@ -38,7 +38,7 @@ const board = ['five15', 'five15', 'five15',
   'five15', 'five14', 'five13',
   'six15', 'six14', 'six13',
   'eight15', 'eight14', 'eight13',
-  'customBoard']
+  'custom-board']
 const nButton = ['4B', '5B', '6B', '8B']
 const capture = ref(null)
 let songList = Array

@@ -28,30 +28,32 @@
 <script>
 export default {
   name: "createCustomThumbnail",
-  props: {
-    songs: Array
-  }
 }
 </script>
-<script setup="props">
+<script setup>
   import {useStore} from "vuex";
   import {ref, watch} from "vue";
-  const store = useStore
+  const props = defineProps({
+    songs: Array
+  })
+  const store = useStore()
   const selDiff = ref('nm')
-  let selCategory = ref(3)
-  let selSong = ref(props.songs[3][0])
+  let selCategory = ref(1)
+  let selSong = ref(props.songs[1][0])
   const diff = ['nm', 'hd', 'mx', 'sc']
   const dlc = ['All Songs','respect', 'portable1', 'portable2', 'portable3', 'trilogy',
     'clazziquai', 'blacksquare', 'technika1', 'technika2', 'technika3', 'emotional',
     'vextension', 'collaboration']
 
+  const selected = (idx) => selSong.value = props.songs[selCategory.value][idx]
   const createT = () => {
-    store.commit('manageThumbnail/createThumbnail', {
+    store.commit('createThumbnail', {
       category: selSong.value.category,
       songName: selSong.value.file_name,
       songLevel: selDiff.value})
   }
-  const createNG = () => store.commit('manageThumbnail/createNextGrade')
+  const createNG = () => store.commit('createNextGrade')
+
   watch(() => selCategory.value, (newVal) =>{
     selCategory.value = newVal
     selSong.value = props.songs[newVal][0]

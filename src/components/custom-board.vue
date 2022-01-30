@@ -1,9 +1,9 @@
 <template>
-  <div class="customboard">
+  <div class="custom-board">
     <h1>커스텀 보드</h1>
-    <div v-for="(difficulty, grade) in store.state.manageThumbnail.difficultyBoard" v-bind:key="grade">
+    <div v-for="(difficulty, grade) in board" v-bind:key="grade">
       <div class="grade">
-        <img class="gradeBox" :src="require(`@/assets/img/grade/${store.state.manageThumbnail.difficultyBoard.length-grade}.png`)" alt="등급">
+        <img class="gradeBox" :src="require(`@/assets/img/grade/${board.length-grade}.png`)" alt="등급">
         <transition-group tag="div" class="levelBox" name="list">
           <div class="cbBox" v-for="thumb in difficulty" v-bind:key="thumb.id" v-on:click="deleteThumb(grade, thumb.id)">
             <img class="sName" :src="require(`@/assets/img/thumbnails/${thumb.category}/${thumb.songName}.jpg`)" alt="썸네일">
@@ -23,8 +23,10 @@ export default {
 </script>
 <script setup>
   import {useStore} from "vuex";
-  const store = useStore
-  const deleteThumb = (grade, id) => store.commit('manageThumbnail/deleteThumbnail', {grade: grade, id: id})
+  import {computed} from "vue";
+  const store = useStore()
+  const board = computed(() => store.getters.difficultyBoard)
+  const deleteThumb = (grade, id) => store.commit('deleteThumbnail', {grade: grade, id: id})
 </script>
 
 <style scoped>
