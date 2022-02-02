@@ -10,14 +10,14 @@
     </select>
     <div class="cctBox">
       <img class="cctThumb" v-for="(thumb, idx) in songs[selCategory]" v-bind:key="idx" v-on:click="selected(idx)"
-           :src="require(`@/assets/img/thumbnails/${thumb.category}/${thumb.file_name}.jpg`)" alt="썸네일">
+           :src="require(`@/assets/img/thumbnails/${thumb.category}/${thumb.file_name}.webp`)" alt="썸네일">
     </div>
     <!--고른 것 프리뷰-->
     <br>
       <div class="cctPreview">
-        <img class="cctName" :src="require(`@/assets/img/thumbnails/${selSong.category}/${selSong.file_name}.jpg`)" alt="썸네일">
-        <img class="cctLevel" :src="require(`@/assets/img/level/${selDiff}.png`)" alt="난이도">
-        <img class="cctBorder" :src="require(`@/assets/img/border/${selSong.category}.png`)" alt="카데고리">
+        <img class="cctName" :src="require(`@/assets/img/thumbnails/${selSong.category}/${selSong.file_name}.webp`)" alt="썸네일">
+        <img class="cctLevel" :src="require(`@/assets/img/level/${selDiff}.webp`)" alt="난이도">
+        <img class="cctBorder" :src="require(`@/assets/img/border/${selSong.category}.webp`)" alt="카데고리">
       </div>
     <br>
     <button class="makeBox" v-on:click="createT">만들기</button>

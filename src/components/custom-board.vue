@@ -6,9 +6,9 @@
         <img class="gradeBox" :src="require(`@/assets/img/grade/${board.length-grade}.png`)" alt="등급">
         <transition-group tag="div" class="levelBox" name="list">
           <div class="cbBox" v-for="thumb in difficulty" v-bind:key="thumb.id" v-on:click="deleteThumb(grade, thumb.id)">
-            <img class="sName" :src="require(`@/assets/img/thumbnails/${thumb.category}/${thumb.songName}.jpg`)" alt="썸네일">
-            <img class="sLevel" :src="require(`@/assets/img/level/${thumb.songLevel}.png`)" alt="난이도" draggable="false">
-            <img class="sBorder" :src="require(`@/assets/img/border/${thumb.category}.png`)" alt="카데고리" draggable="false">
+            <img class="sName" :src="require(`@/assets/img/thumbnails/${thumb.category}/${thumb.songName}.webp`)" alt="썸네일">
+            <img class="sLevel" :src="require(`@/assets/img/level/${thumb.songLevel}.webp`)" alt="난이도" draggable="false">
+            <img class="sBorder" :src="require(`@/assets/img/border/${thumb.category}.webp`)" alt="카데고리" draggable="false">
             <input class="judgeBox" type="text" placeholder="-- . -- %" v-model="thumb.judgement">
           </div>
         </transition-group>

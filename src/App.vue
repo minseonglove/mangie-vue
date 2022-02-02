@@ -12,10 +12,10 @@
       <button v-on:click="saveScreenShot">캡쳐</button>
     </div>
     <div ref="capture">
-      <board-template v-show="!isCustomBoard" :title="boardTitle[currentPage]" :difficulty-board="difficultyBoard[currentPage]"/>
+      <board-template v-show="!isCustomBoard" :title="boardTitle[currentPage]" :page="currentPage"/>
       <custom-board v-show="isCustomBoard"/>
     </div>
-    <create-custom-thumbnail v-if="currentPage === 12" :songs="songList"/>
+    <create-custom-thumbnail v-if="isCustomBoard" :songs="songList"/>
   </div>
 </template>
 
@@ -33,7 +33,6 @@ export default {
 import {computed, onMounted, ref} from "vue";
 import html2canvas from "html2canvas";
 import axios from "axios"
-import {difficultyBoard} from './boardInfo'
 import BoardTemplate from "./components/boardTemplate";
 import CustomBoard from "./components/custom-board";
 
