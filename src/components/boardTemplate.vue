@@ -1,11 +1,11 @@
 <template>
   <div>
-    <h1>{{title}}</h1>
+    <h1>{{props.title}}</h1>
     <div v-for="(difficulty, grade) in board" :key="grade">
       <div class="grade">
         <img class="gradeBox" :src="require(`@/assets/img/grade/${board.length-grade}.png`)" alt="등급">
         <div class="levelBox">
-          <div class="thumbBox" v-for="thumb in difficulty" :key="thumb.id" v-on:mouseover="getSongInfo(thumb)">
+          <div class="thumbBox" v-for="thumb in difficulty" :key="thumb" v-on:mouseover="getSongInfo(thumb)">
             <img class="sName" :src="require(`@/assets/img/thumbnails/${thumb.category}/${thumb.songName}.webp`)" alt="썸네일"
                  v-on:mouseover="showSongInfo($event)" v-on:mouseleave="hideSongInfo">
             <img class="sLevel" :src="require(`@/assets/img/level/${thumb.songLevel}.webp`)" alt="난이도">
@@ -29,13 +29,13 @@ export default {
 </script>
 <script setup>
 import {computed, ref, watch} from "vue";
-import {difficultyBoard} from "../boardInfo";
+import {useStore} from "vuex";
 
 const props = defineProps({
     title: String,
-    page: Number
   })
   const info = ref(null)
+  const store = useStore()
   let songInfoVisible = ref(false)
   let songInfoName = ref('')
   let songInfoCategory = ref('')
@@ -59,7 +59,8 @@ const props = defineProps({
   const moveInfoBox = function () {
     info.value.style.top = targetThumbnail.getBoundingClientRect().top + "px"
   }
-  const board = computed(() => difficultyBoard[props.page])
+
+  const board = computed(() => store.getters["staticBoard/board"])
   watch(()=>songInfoVisible.value, (newVal) => info.value.style.visibility = newVal ? "visible" : "hidden")
 </script>
 <style scoped>

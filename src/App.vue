@@ -12,7 +12,7 @@
       <button v-on:click="saveScreenShot">캡쳐</button>
     </div>
     <div ref="capture">
-      <board-template v-show="!isCustomBoard" :title="boardTitle[currentPage]" :page="currentPage"/>
+      <board-template v-show="!isCustomBoard" :title="boardTitle[currentPage]"/>
       <custom-board v-show="isCustomBoard"/>
     </div>
     <create-custom-thumbnail v-if="isCustomBoard" :songs="songList"/>
@@ -35,7 +35,9 @@ import html2canvas from "html2canvas";
 import axios from "axios"
 import BoardTemplate from "./components/boardTemplate";
 import CustomBoard from "./components/custom-board";
+import {useStore} from "vuex";
 
+const store = useStore()
 const boardTitle = ['4B 13LV', '4B 14LV', '4B 15LV',
   '5B 13LV', '5B 14LV', '5B 15LV',
   '6B 13LV', '6B 14LV', '6B 15LV',
@@ -67,7 +69,10 @@ const saveScreenShot = () => {
   })
 }
 /*서열표 전환*/
-const setPage = (page) => currentPage.value = page
+const setPage = (page) => {
+  currentPage.value = page
+  store.commit('staticBoard/setBoard', page)
+}
 
 const isCustomBoard = computed(()=> currentPage.value === 12)
 </script>

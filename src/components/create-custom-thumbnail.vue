@@ -47,12 +47,12 @@ export default {
 
   const selected = (idx) => selSong.value = props.songs[selCategory.value][idx]
   const createT = () => {
-    store.commit('createThumbnail', {
+    store.commit('customBoard/createThumbnail', {
       category: selSong.value.category,
       songName: selSong.value.file_name,
       songLevel: selDiff.value})
   }
-  const createNG = () => store.commit('createNextGrade')
+  const createNG = () => store.commit('customBoard/createNextGrade')
 
   watch(() => selCategory.value, (newVal) =>{
     selCategory.value = newVal

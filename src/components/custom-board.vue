@@ -25,8 +25,8 @@ export default {
   import {useStore} from "vuex";
   import {computed} from "vue";
   const store = useStore()
-  const board = computed(() => store.getters.difficultyBoard)
-  const deleteThumb = (grade, id) => store.commit('deleteThumbnail', {grade: grade, id: id})
+  const board = computed(() => store.getters['customBoard/difficultyBoard'])
+  const deleteThumb = (grade, id) => store.commit('customBoard/deleteThumbnail', {grade: grade, id: id})
 </script>
 
 <style scoped>
