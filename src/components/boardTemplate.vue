@@ -60,7 +60,7 @@ const props = defineProps({
     info.value.style.top = targetThumbnail.getBoundingClientRect().top + "px"
   }
 
-  const board = computed(() => store.getters["staticBoard/board"])
+  const board = computed(() => store.getters["staticBoard/selectedBoard"])
   watch(()=>songInfoVisible.value, (newVal) => info.value.style.visibility = newVal ? "visible" : "hidden")
 </script>
 <style scoped>

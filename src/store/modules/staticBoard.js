@@ -7055,16 +7055,27 @@ const state = {
             ]
         ]
     ],
-    now: 11
+    now: 11,
 }
 
 const getters = {
-    board: (state) => state.board[state.now]
+    selectedBoard: (state) => state.board[state.now],
+    board: (state) => state.board
 }
 
 const mutations = {
-    setBoard(state, now){
+    setPage(state, now){
         state.now = now
+    },
+    setBoard(state, board){
+        state.board = board
+    },
+    initBoard(state, judgements){ //유저의 입력을 저장한 쿠키가 있다면 judgement를 초기화 해줍니다
+        const judgement = judgements.split('|')
+        for(let j of judgement){
+            const split = j.split(' ')
+            state.board[split[0]][split[1]][split[2]].judgement = split[3]
+        }
     }
 }
 
