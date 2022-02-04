@@ -12,6 +12,7 @@
     "babel-eslint": "^10.1.0",
     "core-js": "^3.6.5",
     "html2canvas": "^1.4.1",
+    "localforage": "^1.10.0",
     "vue": "^3.0.0",
     "vue3-cookies": "^1.0.6",
     "vuex": "^4.0.1"

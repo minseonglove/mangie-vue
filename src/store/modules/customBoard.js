@@ -31,6 +31,10 @@ const mutations = {
                 break
             }
         }
+    },
+    initBoard (state, board){
+        if(board !== null)
+            state.difficultyBoard = board
     }
 }
 

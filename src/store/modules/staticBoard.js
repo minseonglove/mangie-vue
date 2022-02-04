@@ -7070,11 +7070,20 @@ const mutations = {
     setBoard(state, board){
         state.board = board
     },
-    initBoard(state, judgements){ //유저의 입력을 저장한 쿠키가 있다면 judgement를 초기화 해줍니다
-        const judgement = judgements.split('|')
-        for(let j of judgement){
-            const split = j.split(' ')
-            state.board[split[0]][split[1]][split[2]].judgement = split[3]
+    initBoard(state, userInfo){ //유저의 입력을 저장한 스토리지가 있다면 judgement를 초기화 해줍니다
+        for(let info of userInfo){
+            for(let i in state.board[info.idx]){
+                let flag = false
+                for(let j in state.board[info.idx][i]){
+                    if(state.board[info.idx][i][j].id === info.id){
+                        state.board[info.idx][i][j].judgement = info.judgement
+                        flag = true
+                        break
+                    }
+                }
+                if (flag)
+                    break
+            }
         }
     }
 }

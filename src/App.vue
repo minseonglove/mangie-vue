@@ -36,9 +36,8 @@ import axios from "axios"
 import BoardTemplate from "./components/boardTemplate";
 import CustomBoard from "./components/custom-board";
 import {useStore} from "vuex";
-import {useCookies} from 'vue3-cookies'
+import localforage from "localforage";
 
-const {cookies} = useCookies()
 const store = useStore()
 const boardTitle = ['4B 13LV', '4B 14LV', '4B 15LV',
   '5B 13LV', '5B 14LV', '5B 15LV',
@@ -53,27 +52,34 @@ onMounted(()=>{
   axios.get('/song-list').then(result => {
     songList = result.data
   }).catch(error => alert(error))
-  //쿠키설정을 위한 unload 이벤트
-  window.addEventListener('beforeunload', setCookies)
-  //저장된 쿠키가 있다면 받아오기
-  if (cookies.isKey("saveUserBoard"))
-    store.commit('staticBoard/initBoard', cookies.get("saveUserBoard"))
+  //스토리지 설정을 위한 unload 이벤트
+  window.addEventListener('beforeunload', setStorage)
+  //저장된 스토리지가 있다면 받아오기
+  localforage.getItem('saveUserBoard').then((userInfo)=>{
+    store.commit('staticBoard/initBoard', userInfo)
+  })
+  localforage.getItem('saveCustomBoard').then((saveCustomBoard)=>{
+    store.commit('customBoard/initBoard', saveCustomBoard)
+  })
 })
-onBeforeUnmount(()=> window.removeEventListener('beforeunload', setCookies))
-//쿠키에 유저가 작성한 서열표 정보를 담아둡니다
-const setCookies = function () {
+onBeforeUnmount(()=> window.removeEventListener('beforeunload', setStorage))
+//스토리지에 유저가 작성한 서열표 정보를 담아둡니다
+const setStorage = function () {
   const board = store.getters['staticBoard/board']
-  let judgements = ''
+  const userInfo = []
   //보드를 둘러보며 judgement가 수정된것이 있다면 저장합니다
   for(let i in board){
     for(let j in board[i]){
       for(let k in board[i][j]){
-        if(board[i][j][k].judgement)
-          judgements += i + ' ' + j + ' ' + k + ' ' + board[i][j][k].judgement + '|'
+        if(board[i][j][k].judgement)// i, id, judgement 저장?
+          userInfo.push({idx: i, id: board[i][j][k].id, judgement: board[i][j][k].judgement})
       }
     }
   }
-  cookies.set("saveUserBoard", judgements)
+  localforage.setItem('saveUserBoard', userInfo)
+  //커스텀 서열표 정보를 저장합니다
+  //이유는 모르겠으나 깊은 복사로 하지않으면 들어가지 않습니다
+  localforage.setItem('saveCustomBoard', JSON.parse(JSON.stringify(store.getters['customBoard/difficultyBoard'])))
 }
 
 /*서열표 캡쳐*/

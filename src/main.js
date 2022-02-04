@@ -2,11 +2,10 @@ import { createApp } from 'vue'
 import store from './store'
 import App from './App.vue'
 import axios from "axios"
-import { globalCookiesConfig } from "vue3-cookies";
+import localforage from 'localforage'
 
-globalCookiesConfig({
-    expireTimes: "1d",
-    secure: true
+localforage.config({
+    name: 'userinfo'
 })
 
 const app = createApp(App)
