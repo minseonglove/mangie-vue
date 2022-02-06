@@ -19,22 +19,30 @@ const mutations = {
         })
     },
     createNextGrade (state){
-        state.currentGrade++
         state.difficultyBoard.push([])
+        state.currentGrade = state.difficultyBoard.length-1
     },
     deleteThumbnail (state, payload){
         for(let i in state.difficultyBoard[payload.grade]){
             if(state.difficultyBoard[payload.grade][i].id === payload.id) {
                 state.difficultyBoard[payload.grade].splice(i, 1)
-                if(payload.grade !== 0 && state.difficultyBoard[payload.grade].length === 0)
+                if(payload.grade !== 0 && state.difficultyBoard[payload.grade].length === 0) {
                     state.difficultyBoard.splice(payload.grade, 1)
+                    if(state.currentGrade ===  state.difficultyBoard.length)
+                        state.currentGrade--
+                }
                 break
             }
         }
     },
+    setCurrentGrade (state, currentGrade){
+        state.currentGrade = currentGrade
+    },
     initBoard (state, board){
-        if(board !== null)
+        if(board !== null) {
             state.difficultyBoard = board
+            state.currentGrade = state.difficultyBoard.length-1
+        }
     }
 }
 

@@ -3,7 +3,7 @@
     <h1>커스텀 보드</h1>
     <div v-for="(difficulty, grade) in board" v-bind:key="grade">
       <div class="grade">
-        <img class="gradeBox" :src="require(`@/assets/img/grade/${board.length-grade}.png`)" alt="등급">
+        <img class="gradeBox" :src="require(`@/assets/img/grade/${board.length-grade}.png`)" v-on:click="setCurrentGrade(grade)" alt="등급">
         <transition-group tag="div" class="levelBox" name="list">
           <div class="cbBox" v-for="thumb in difficulty" v-bind:key="thumb.id" v-on:click="deleteThumb(grade, thumb.id)">
             <img class="sName" :src="require(`@/assets/img/thumbnails/${thumb.category}/${thumb.songName}.webp`)" alt="썸네일">
@@ -25,6 +25,11 @@ export default {
   import {useStore} from "vuex";
   import {computed} from "vue";
   const store = useStore()
+  const mangiePopup = document.getElementsByClassName("gradeSelect")
+  const setCurrentGrade = (currentGrade) => {
+    mangiePopup.value = true
+    store.commit('customBoard/setCurrentGrade', currentGrade)
+  }
   const board = computed(() => store.getters['customBoard/difficultyBoard'])
   const deleteThumb = (grade, id) => store.commit('customBoard/deleteThumbnail', {grade: grade, id: id})
 </script>
@@ -36,6 +41,9 @@ export default {
 .cbBox{
   transition: all 0.3s;
   height: 130px;
+}
+.gradeBox:hover{
+  cursor: pointer;
 }
 .list-enter-active{
   animation: bounce-in 0.3s;

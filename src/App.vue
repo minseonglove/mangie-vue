@@ -7,12 +7,19 @@
       </div>
       <div class="selectBox">
         <p>커스텀 서열표</p>
+        <p>{{test}}</p>
         <button class="difficultyBtn" v-on:click="setPage(12)">만들자</button>
       </div>
       <button v-on:click="saveScreenShot">캡쳐</button>
+      <br>
+      <img class="gradeSelect" :src="require('@/assets/img/etc/gradeSelect.webp')" alt="망이"/>
     </div>
     <div ref="capture">
-      <board-template v-show="!isCustomBoard" :title="boardTitle[currentPage]"/>
+      <!--페이지를 넘기는 기능과 페이지에 맞는 타이틀 이미지를 추가하자-->
+      <div class="boardTitle" v-show="!isCustomBoard">
+        <p>응애</p>
+      </div>
+      <board-template v-show="!isCustomBoard"/>
       <custom-board v-show="isCustomBoard"/>
     </div>
     <create-custom-thumbnail v-if="isCustomBoard" :songs="songList"/>
@@ -28,7 +35,6 @@ export default {
   }
 }
 </script>
-<!--컴포지션 api-->
 <script setup>
 import {computed, onBeforeUnmount, onMounted, ref} from "vue";
 import html2canvas from "html2canvas";
@@ -47,11 +53,14 @@ let currentPage = ref(11)
 const nButton = ['4B', '5B', '6B', '8B']
 const capture = ref(null)
 let songList = Array
+const test = ref(window.innerWidth)
 
 onMounted(()=>{
   axios.get('/song-list').then(result => {
     songList = result.data
   }).catch(error => alert(error))
+  //페이지 크기 감지를 위한 이벤트
+  window.addEventListener('resize', myWidth)
   //스토리지 설정을 위한 unload 이벤트
   window.addEventListener('beforeunload', setStorage)
   //저장된 스토리지가 있다면 받아오기
@@ -62,7 +71,10 @@ onMounted(()=>{
     store.commit('customBoard/initBoard', saveCustomBoard)
   })
 })
-onBeforeUnmount(()=> window.removeEventListener('beforeunload', setStorage))
+onBeforeUnmount(()=> {
+  window.removeEventListener('resize', myWidth)
+  window.removeEventListener('beforeunload', setStorage)
+})
 //스토리지에 유저가 작성한 서열표 정보를 담아둡니다
 const setStorage = function () {
   const board = store.getters['staticBoard/board']
@@ -102,6 +114,10 @@ const setPage = (page) => {
 }
 
 const isCustomBoard = computed(()=> currentPage.value === 12)
+
+const myWidth = function () {
+  test.value = window.innerWidth
+}
 </script>
 
 <style>

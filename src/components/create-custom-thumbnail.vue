@@ -43,7 +43,7 @@ export default {
   const diff = ['nm', 'hd', 'mx', 'sc']
   const dlc = ['All Songs','respect', 'portable1', 'portable2', 'portable3', 'trilogy',
     'clazziquai', 'blacksquare', 'technika1', 'technika2', 'technika3', 'emotional',
-    'vextension', 'collaboration']
+    'vextension', 'vextension2', 'collaboration']
 
   const selected = (idx) => selSong.value = props.songs[selCategory.value][idx]
   const createT = () => {

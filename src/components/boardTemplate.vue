@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <h1>{{props.title}}</h1>
+  <div class="board-template">
     <div v-for="(difficulty, grade) in board" :key="grade">
       <div class="grade">
         <img class="gradeBox" :src="require(`@/assets/img/grade/${board.length-grade}.png`)" alt="등급">
@@ -30,10 +29,6 @@ export default {
 <script setup>
 import {computed, ref, watch} from "vue";
 import {useStore} from "vuex";
-
-const props = defineProps({
-    title: String,
-  })
   const info = ref(null)
   const store = useStore()
   let songInfoVisible = ref(false)
