@@ -7060,7 +7060,8 @@ const state = {
 
 const getters = {
     selectedBoard: (state) => state.board[state.now],
-    board: (state) => state.board
+    board: (state) => state.board,
+    now: (state) => state.now
 }
 
 const mutations = {

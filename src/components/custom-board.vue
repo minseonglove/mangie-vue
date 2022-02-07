@@ -1,9 +1,10 @@
 <template>
   <div class="custom-board">
-    <h1>커스텀 보드</h1>
     <div v-for="(difficulty, grade) in board" v-bind:key="grade">
       <div class="grade">
-        <img class="gradeBox" :src="require(`@/assets/img/grade/${board.length-grade}.png`)" v-on:click="setCurrentGrade(grade)" alt="등급">
+        <div class="gradeBox" v-on:click="setCurrentGrade(grade)">
+          <p>{{board.length - grade}}</p>
+        </div>
         <transition-group tag="div" class="levelBox" name="list">
           <div class="cbBox" v-for="thumb in difficulty" v-bind:key="thumb.id" v-on:click="deleteThumb(grade, thumb.id)">
             <img class="sName" :src="require(`@/assets/img/thumbnails/${thumb.category}/${thumb.songName}.webp`)" alt="썸네일">
@@ -44,6 +45,7 @@ export default {
 }
 .gradeBox:hover{
   cursor: pointer;
+  color: crimson;
 }
 .list-enter-active{
   animation: bounce-in 0.3s;

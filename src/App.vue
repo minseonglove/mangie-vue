@@ -1,5 +1,6 @@
 <template>
   <div id="app" style="display: flex">
+    <!--창 크기에 따라 없애주면 좋을듯-->
     <div>
       <div class="selectBox" v-for="(btn, idx) in nButton" :key="idx">
         <p>{{btn}}</p>
@@ -16,13 +17,11 @@
     </div>
     <div ref="capture">
       <!--페이지를 넘기는 기능과 페이지에 맞는 타이틀 이미지를 추가하자-->
-      <div class="boardTitle" v-show="!isCustomBoard">
-        <p>응애</p>
-      </div>
+      <div class="boardTitle boardImage"/>
       <board-template v-show="!isCustomBoard"/>
       <custom-board v-show="isCustomBoard"/>
     </div>
-    <create-custom-thumbnail v-if="isCustomBoard" :songs="songList"/>
+    <create-custom-thumbnail class="createBox" v-if="isCustomBoard" :songs="songList"/>
   </div>
 </template>
 
@@ -60,7 +59,7 @@ onMounted(()=>{
     songList = result.data
   }).catch(error => alert(error))
   //페이지 크기 감지를 위한 이벤트
-  window.addEventListener('resize', myWidth)
+  window.addEventListener('resize', reactiveWidth)
   //스토리지 설정을 위한 unload 이벤트
   window.addEventListener('beforeunload', setStorage)
   //저장된 스토리지가 있다면 받아오기
@@ -72,7 +71,7 @@ onMounted(()=>{
   })
 })
 onBeforeUnmount(()=> {
-  window.removeEventListener('resize', myWidth)
+  window.removeEventListener('resize', reactiveWidth)
   window.removeEventListener('beforeunload', setStorage)
 })
 //스토리지에 유저가 작성한 서열표 정보를 담아둡니다
@@ -113,9 +112,11 @@ const setPage = (page) => {
   store.commit('staticBoard/setPage', page)
 }
 
-const isCustomBoard = computed(()=> currentPage.value === 12)
+const isCustomBoard = computed(()=> {
+  return currentPage.value === 12
+})
 
-const myWidth = function () {
+const reactiveWidth = function () {
   test.value = window.innerWidth
 }
 </script>

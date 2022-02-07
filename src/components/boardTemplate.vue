@@ -2,7 +2,9 @@
   <div class="board-template">
     <div v-for="(difficulty, grade) in board" :key="grade">
       <div class="grade">
-        <img class="gradeBox" :src="require(`@/assets/img/grade/${board.length-grade}.png`)" alt="등급">
+        <div class="gradeBox">
+          <p>{{board.length - grade}}</p>
+        </div>
         <div class="levelBox">
           <div class="thumbBox" v-for="thumb in difficulty" :key="thumb" v-on:mouseover="getSongInfo(thumb)">
             <img class="sName" :src="require(`@/assets/img/thumbnails/${thumb.category}/${thumb.songName}.webp`)" alt="썸네일"
@@ -15,7 +17,7 @@
       </div>
     </div>
   </div>
-  <div ref="info" class="infoBox" v-on:mouseover="songInfoVisible=true" v-on:mouseleave="hideSongInfo">
+  <div ref="info" class="infoBox" v-if="store.getters['staticBoard/now'] < 12" v-on:mouseover="songInfoVisible=true" v-on:mouseleave="hideSongInfo">
     <p>{{songInfoName}}</p>
     <p>{{songInfoCategory}}</p>
   </div>

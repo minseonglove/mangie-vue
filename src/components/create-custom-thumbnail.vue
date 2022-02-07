@@ -1,6 +1,7 @@
 <template>
-  <div>
-    <p>카데고리-</p>
+  <!--열고닫는 창으로 하고싶다-->
+  <div class="cct">
+    <p>카데고리</p>
     <select v-model="selCategory">
       <option v-for="(c, idx) in dlc" :key="idx" :value="idx">{{c}}</option>
     </select>
@@ -91,5 +92,11 @@ export default {
   position: relative;
   top: 5px;
   right: 63px;
+}
+
+@media (max-width: 1379px){
+  .cct{
+    visibility: hidden;
+  }
 }
 </style>
