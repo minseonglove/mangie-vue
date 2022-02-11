@@ -1,27 +1,33 @@
 <template>
-  <div id="app" style="display: flex">
-    <!--창 크기에 따라 없애주면 좋을듯-->
-    <div>
-      <div class="selectBox" v-for="(btn, idx) in nButton" :key="idx">
-        <p>{{btn}}</p>
-        <button class="difficultyBtn" v-for="diff in 3" :key="diff" v-on:click="setPage(diff+idx*3-1)">{{12+diff}}LV</button>
+  <div id="app">
+    <header id="main_header">
+      <div class="header_inner">
+
       </div>
-      <div class="selectBox">
-        <p>커스텀 서열표</p>
-        <p>{{test}}</p>
-        <button class="difficultyBtn" v-on:click="setPage(12)">만들자</button>
+    </header>
+    <div id="main">
+      <div>
+        <div class="selectBox" v-for="(btn, idx) in nButton" :key="idx">
+          <p>{{btn}}</p>
+          <button class="difficultyBtn" v-for="diff in 3" :key="diff" v-on:click="setPage(diff+idx*3-1)">{{12+diff}}LV</button>
+        </div>
+        <div class="selectBox">
+          <p>커스텀 서열표</p>
+          <p>{{test}}</p>
+          <button class="difficultyBtn" v-on:click="setPage(12)">만들자</button>
+        </div>
+        <button v-on:click="saveScreenShot">캡쳐</button>
+        <br>
+        <img class="gradeSelect" :src="require('@/assets/img/etc/gradeSelect.webp')" alt="망이"/>
       </div>
-      <button v-on:click="saveScreenShot">캡쳐</button>
-      <br>
-      <img class="gradeSelect" :src="require('@/assets/img/etc/gradeSelect.webp')" alt="망이"/>
+      <div ref="capture">
+        <!--페이지를 넘기는 기능과 페이지에 맞는 타이틀 이미지를 추가하자-->
+        <div class="boardTitle boardImage"/>
+        <board-template v-show="!isCustomBoard"/>
+        <custom-board v-show="isCustomBoard"/>
+      </div>
+      <create-custom-thumbnail class="createBox" v-if="isCustomBoard" :songs="songList"/>
     </div>
-    <div ref="capture">
-      <!--페이지를 넘기는 기능과 페이지에 맞는 타이틀 이미지를 추가하자-->
-      <div class="boardTitle boardImage"/>
-      <board-template v-show="!isCustomBoard"/>
-      <custom-board v-show="isCustomBoard"/>
-    </div>
-    <create-custom-thumbnail class="createBox" v-if="isCustomBoard" :songs="songList"/>
   </div>
 </template>
 
@@ -55,9 +61,15 @@ let songList = Array
 const test = ref(window.innerWidth)
 
 onMounted(()=>{
+  const main = document.getElementById('main')
+  const header = document.getElementById('main_header')
+  main.style.setProperty('margin-top', 'calc(' + header.clientHeight + 'px +' + ' 5vh)')
+
   axios.get('/song-list').then(result => {
     songList = result.data
-  }).catch(error => alert(error))
+    // 곡의 파일 이름을 key로 갖고 곡의 실제 이름과 카데고리를 value로 갖는 map을 초기화
+    store.dispatch('initSongInfo', songList)
+  })//.catch(error => alert(error))
   //페이지 크기 감지를 위한 이벤트
   window.addEventListener('resize', reactiveWidth)
   //스토리지 설정을 위한 unload 이벤트
@@ -128,14 +140,20 @@ const reactiveWidth = function () {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  width: 100%;
+}
+#main {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  display: flex;
 }
 .selectBox{
   width: 200px;
-  margin: 10px 0;
+  margin: 1px 0;
 }
 .difficultyBtn{
-  margin: 0 5px;
+  margin: 0 1px;
 }
 </style>
 <style src="./style/difficultyBoard.css"></style>

@@ -41,8 +41,8 @@ import {useStore} from "vuex";
   const showSongInfo = (event) => {
     songInfoVisible.value = true
     targetThumbnail = event.target
-    info.value.style.top = targetThumbnail.getBoundingClientRect().top + "px"
-    info.value.style.left = targetThumbnail.getBoundingClientRect().left + "px"
+    info.value.style.top = targetThumbnail.offsetTop + "px"
+    info.value.style.left = targetThumbnail.offsetLeft + "px"
     window.addEventListener('scroll', moveInfoBox)
   }
   const hideSongInfo = () => {
@@ -50,11 +50,13 @@ import {useStore} from "vuex";
     window.addEventListener('scroll', moveInfoBox)
   }
   const getSongInfo = (thumb) => {
-    songInfoName.value = thumb.songName
-    songInfoCategory.value = thumb.category
+    //songname을 키로 갖는 맵이 필요하다
+    const info = store.getters.songInfo(thumb.songName)
+    songInfoName.value = info.name
+    songInfoCategory.value = info.category
   }
   const moveInfoBox = function () {
-    info.value.style.top = targetThumbnail.getBoundingClientRect().top + "px"
+    info.value.style.top = targetThumbnail.offsetTop + "px"
   }
 
   const board = computed(() => store.getters["staticBoard/selectedBoard"])

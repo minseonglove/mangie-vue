@@ -1,3 +1,21 @@
+header{
+    position: fixed;
+    margin: 0;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    border-bottom: 2px solid #dcdcdc;
+    z-index: 999;
+    background-color: white;
+}
+.header_inner{
+    margin: auto;
+    position: relative;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
 /*서열표 기본 스타일 8개 한줄*/
 .grade{
     display: flex;
@@ -62,7 +80,7 @@
 }
 
 .gradeSelect{
-    animation: mangie-pop 1.5s linear infinite;
+    animation: mangie-pop 1.3s linear infinite;
     transform-origin: 50% 50%;
 }
 
