@@ -75,7 +75,6 @@
 .createBox{
     margin-left: 1rem
 }
-
 @media (min-width: 1600px){
     .levelBox{
         display: grid;

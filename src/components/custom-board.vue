@@ -40,7 +40,7 @@ export default {
   cursor: pointer;
 }
 .cbBox{
-  transition: all 0.3s;
+  transition: all 0.3s ease-in-out;
   height: 130px;
 }
 .gradeBox:hover{

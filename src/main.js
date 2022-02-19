@@ -4,6 +4,7 @@ import App from './App.vue'
 import axios from "axios"
 import localforage from 'localforage'
 
+
 localforage.config({
     name: 'userinfo'
 })

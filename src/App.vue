@@ -17,28 +17,26 @@
       </div>
       <div class="all_menu_wrap">
         <div class="all_menu_inner">
-          <ul class="all_menu" v-for="(btn, idx) in nButton" :key="idx">
-            <li>
-              <span>{{btn}}</span>
-              <ul class="depth2">
-                <li v-for="diff in 3" :key="diff" v-on:click="setPage(diff+idx*3-1)">
-                  <span>{{12+diff}}LV</span>
-                </li>
-              </ul>
-            </li>
-          </ul>
-          <br>
+          <div class="diff_menu">
+            <ul class="all_menu" v-for="(btn, idx) in nButton" :key="idx">
+              <li>
+                <span>{{btn}}</span>
+                <ul class="depth2">
+                  <li v-for="diff in 3" :key="diff" v-on:click="setPage(diff+idx*3-1)">
+                    <span>{{12+diff}}LV</span>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <span v-on:click="setPage(12)">커스텀 서열표</span>
         </div>
       </div>
       <div id="allMenuWrapBg"></div>
     </header>
     <div id="main">
       <div>
-        <div class="selectBox">
-          <p>커스텀 서열표</p>
-          <p>{{test}}</p>
-          <button class="difficultyBtn" v-on:click="setPage(12)">만들자</button>
-        </div>
+        <p>{{test}}</p>
         <button v-on:click="saveScreenShot">캡쳐</button>
         <br>
         <img class="gradeSelect" :src="require('@/assets/img/etc/gradeSelect.webp')" alt="망이"/>
@@ -87,29 +85,15 @@ onMounted(()=>{
   main.style.setProperty('margin-top', 'calc(' + header.clientHeight + 'px +' + ' 7vh)')
 
   initMenu()
-
-  axios.get('/song-list').then(result => {
-    songList = result.data
-    // 곡의 파일 이름을 key로 갖고 곡의 실제 이름과 카데고리를 value로 갖는 map을 초기화
-    store.dispatch('initSongInfo', songList)
-  })//.catch(error => alert(error))
+  initInfo()
   //페이지 크기 감지를 위한 이벤트
   window.addEventListener('resize', reactiveWidth)
-  //스토리지 설정을 위한 unload 이벤트
-  window.addEventListener('beforeunload', setStorage)
-  //저장된 스토리지가 있다면 받아오기
-  localforage.getItem('saveUserBoard').then((userInfo)=>{
-    store.commit('staticBoard/initBoard', userInfo)
-  })
-  localforage.getItem('saveCustomBoard').then((saveCustomBoard)=>{
-    store.commit('customBoard/initBoard', saveCustomBoard)
-  })
 })
 onBeforeUnmount(()=> {
   window.removeEventListener('resize', reactiveWidth)
   window.removeEventListener('beforeunload', setStorage)
 })
-const initMenu = function () {
+const initMenu = () => {
   const allMenu = document.getElementById('allMenu')
   const header = document.getElementById('main_header')
   const allBg = document.getElementById('allMenuWrapBg')
@@ -124,6 +108,22 @@ const initMenu = function () {
       header.className = ''
       allBg.className = ''
     }
+  })
+}
+const initInfo = () => {
+  axios.get('/song-list').then(result => {
+    songList = result.data
+    // 곡의 파일 이름을 key로 갖고 곡의 실제 이름과 카데고리를 value로 갖는 map을 초기화
+    store.dispatch('initSongInfo', songList)
+  })//.catch(error => alert(error))
+  // 스토리지 설정을 위한 unload 이벤트
+  window.addEventListener('beforeunload', setStorage)
+  //저장된 스토리지가 있다면 받아오기
+  localforage.getItem('saveUserBoard').then((userInfo)=>{
+    store.commit('staticBoard/initBoard', userInfo)
+  })
+  localforage.getItem('saveCustomBoard').then((saveCustomBoard)=>{
+    store.commit('customBoard/initBoard', saveCustomBoard)
   })
 }
 //스토리지에 유저가 작성한 서열표 정보를 담아둡니다
@@ -189,10 +189,6 @@ const reactiveWidth = function () {
   left: 50%;
   transform: translate(-50%, 0%);
   display: flex;
-}
-.selectBox{
-  width: 200px;
-  margin: 1px 0;
 }
 </style>
 <style src="./style/difficultyBoard.css"></style>

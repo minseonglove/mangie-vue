@@ -9,8 +9,10 @@
     <select v-model="selDiff">
       <option v-for="d in diff" :key="d">{{d}}</option>
     </select>
+    <p>{{search}}</p>
+    <input class="searchBox" v-model="search" placeholder="filter">
     <div class="cctBox">
-      <img class="cctThumb" v-for="(thumb, idx) in songs[selCategory]" v-bind:key="idx" v-on:click="selected(idx)"
+      <img class="cctThumb" v-for="(thumb, idx) in selList" v-bind:key="idx" v-on:click="selected(idx)"
            :src="require(`@/assets/img/thumbnails/${thumb.category}/${thumb.file_name}.webp`)" alt="썸네일">
     </div>
     <!--고른 것 프리뷰-->
@@ -41,12 +43,14 @@ export default {
   const selDiff = ref('nm')
   let selCategory = ref(1)
   let selSong = ref(props.songs[1][0])
+  let selList = ref(props.songs[1])
   const diff = ['nm', 'hd', 'mx', 'sc']
   const dlc = ['All Songs','respect', 'portable1', 'portable2', 'portable3', 'trilogy',
     'clazziquai', 'blacksquare', 'technika1', 'technika2', 'technika3', 'emotional',
     'vextension', 'vextension2', 'collaboration']
+  const search = ref('')
 
-  const selected = (idx) => selSong.value = props.songs[selCategory.value][idx]
+  const selected = (idx) => selSong.value = selList.value[idx]
   const createT = () => {
     store.commit('customBoard/createThumbnail', {
       category: selSong.value.category,
@@ -55,9 +59,16 @@ export default {
   }
   const createNG = () => store.commit('customBoard/createNextGrade')
 
-  watch(() => selCategory.value, (newVal) =>{
-    selCategory.value = newVal
-    selSong.value = props.songs[newVal][0]
+  watch(search, () =>{
+    if(search.value.length !== 0)
+      selList.value = props.songs[selCategory.value].filter(v => v.file_name.includes(search.value))
+    else
+      selList.value = props.songs[selCategory.value]
+  })
+  watch(selCategory, () => {
+    selSong.value = props.songs[selCategory.value][0]
+    selList.value = props.songs[selCategory.value]
+    search.value = ''
   })
 </script>
 
@@ -93,7 +104,9 @@ export default {
   top: 5px;
   right: 63px;
 }
-
+.searchBox{
+  font-style: italic;
+}
 @media (max-width: 1379px){
   .cct{
     visibility: hidden;
