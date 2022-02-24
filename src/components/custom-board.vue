@@ -1,5 +1,5 @@
 <template>
-  <div class="custom-board">
+  <div class="board">
     <div v-for="(difficulty, grade) in board" v-bind:key="grade">
       <div class="grade">
         <div class="gradeBox" v-on:click="setCurrentGrade(grade)">

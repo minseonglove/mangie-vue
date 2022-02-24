@@ -1,5 +1,5 @@
 <template>
-  <div class="board-template">
+  <div class="board">
     <div v-for="(difficulty, grade) in board" :key="grade">
       <div class="grade">
         <div class="gradeBox">
@@ -7,10 +7,12 @@
         </div>
         <div class="levelBox">
           <div class="thumbBox" v-for="thumb in difficulty" :key="thumb" v-on:mouseover="getSongInfo(thumb)">
-            <img class="sName" :src="require(`@/assets/img/thumbnails/${thumb.category}/${thumb.songName}.webp`)" alt="썸네일"
-                 v-on:mouseover="showSongInfo($event)" v-on:mouseleave="hideSongInfo">
-            <img class="sLevel" :src="require(`@/assets/img/level/${thumb.songLevel}.webp`)" alt="난이도">
-            <img class="sBorder" :src="require(`@/assets/img/border/${thumb.category}.webp`)" alt="카데고리">
+            <div class="thumbWrap">
+              <img class="sName" :src="require(`@/assets/img/thumbnails/${thumb.category}/${thumb.songName}.webp`)" alt="썸네일"
+                   v-on:mouseover="showSongInfo($event)" v-on:mouseleave="hideSongInfo">
+              <img class="sLevel" :src="require(`@/assets/img/level/${thumb.songLevel}.webp`)" alt="난이도">
+              <img class="sBorder" :src="require(`@/assets/img/border/${thumb.category}.webp`)" alt="카데고리">
+            </div>
             <input class="judgeBox" type="text" placeholder="-- . -- %" v-model="thumb.judgement">
           </div>
         </div>
