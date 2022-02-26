@@ -58,34 +58,32 @@
     width: 100%;
     height: 100%;
 }
-.thumbBox>.thumbWrap>.sName{
+.thumbWrap>.sName{
     position: absolute;
     top: 4px;
     left: 4px;
     border: 1px solid white;
     z-index: 1;
 }
-.thumbBox>.thumbWrap>.sLevel{
+.thumbWrap>.sLevel{
     position: absolute;
     top: 4px;
     right: 4px;
     z-index: 2;
 }
-.thumbBox>.thumbWrap>.sBorder{
+.thumbWrap>.sBorder{
     position: absolute;
     top: 0;
     left: 0;
     z-index: 0;
 }
 .boardTitle{
-    margin: 1rem 2rem;
     width: 100%;
     height: 250px;
     background-repeat: no-repeat;
-    background-position-x: center;
 }
 .createBox{
-    margin-left: 1rem
+    margin-left: 1rem;
 }
 .boardImage{
     background-image: url("../assets/img/titleImage/6b15lv_0.jpg");
@@ -99,10 +97,16 @@
     .cct{
         visibility: hidden;
     }
+    .boardTitle{
+        width: 100%;
+        height: 250px;
+        background-repeat: no-repeat;
+        background-position-x: center;
+    }
 }
 @media (min-width: 1530px) {
-    .board{
-        min-width: 1300px;
+    .board {
+        min-width: 1000px;
     }
 }
 

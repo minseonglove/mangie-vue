@@ -7,9 +7,11 @@
         </div>
         <transition-group tag="div" class="levelBox" name="list">
           <div class="cbBox" v-for="thumb in difficulty" v-bind:key="thumb.id" v-on:click="deleteThumb(grade, thumb.id)">
-            <img class="sName" :src="require(`@/assets/img/thumbnails/${thumb.category}/${thumb.songName}.webp`)" alt="썸네일">
-            <img class="sLevel" :src="require(`@/assets/img/level/${thumb.songLevel}.webp`)" alt="난이도" draggable="false">
-            <img class="sBorder" :src="require(`@/assets/img/border/${thumb.category}.webp`)" alt="카데고리" draggable="false">
+            <div class="thumbWrap">
+              <img class="sName" :src="require(`@/assets/img/thumbnails/${thumb.category}/${thumb.songName}.webp`)" alt="썸네일">
+              <img class="sLevel" :src="require(`@/assets/img/level/${thumb.songLevel}.webp`)" alt="난이도" draggable="false">
+              <img class="sBorder" :src="require(`@/assets/img/border/${thumb.category}.webp`)" alt="카데고리" draggable="false">
+            </div>
             <input class="judgeBox" type="text" placeholder="-- . -- %" v-model="thumb.judgement">
           </div>
         </transition-group>
@@ -40,8 +42,12 @@ export default {
   cursor: pointer;
 }
 .cbBox{
+  display: block;
+  height: 91px;
+  position: relative;
+  margin-bottom: 40px;
+  margin-left: 16px;
   transition: all 0.3s ease-in-out;
-  height: 130px;
 }
 .gradeBox:hover{
   cursor: pointer;

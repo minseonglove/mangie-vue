@@ -9,7 +9,7 @@
     <select v-model="selDiff">
       <option v-for="d in diff" :key="d">{{d}}</option>
     </select>
-    <p>{{search}}</p>
+    <br>
     <input class="searchBox" v-model="search" placeholder="filter">
     <div class="cctBox">
       <img class="cctThumb" v-for="(thumb, idx) in selList" v-bind:key="idx" v-on:click="selected(idx)"
@@ -60,8 +60,9 @@ export default {
   const createNG = () => store.commit('customBoard/createNextGrade')
 
   watch(search, () =>{
-    if(search.value.length !== 0)
-      selList.value = props.songs[selCategory.value].filter(v => v.file_name.includes(search.value))
+    const searchTrim = search.value.replaceAll(' ', '')
+    if(searchTrim.length !== 0)
+      selList.value = props.songs[selCategory.value].filter(v => v.file_name.includes(searchTrim))
     else
       selList.value = props.songs[selCategory.value]
   })
@@ -74,14 +75,19 @@ export default {
 
 <style scoped>
 .cctBox{
-  display: grid;
-  grid-template-columns: repeat(3, 90px);
-  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  align-content: flex-start;
+  width: 300px;
   height: 400px;
-  overflow: auto;
+  overflow-y: scroll;
 }
 .cctThumb{
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+  margin-left: 8px;
+  max-width: 80px;
+  max-height: 80px;
 }
 .cctThumb:hover{
   cursor: pointer;
@@ -106,6 +112,7 @@ export default {
 }
 .searchBox{
   font-style: italic;
+  margin: 8px 0;
 }
 @media (max-width: 1379px){
   .cct{
