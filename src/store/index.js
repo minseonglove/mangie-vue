@@ -1,9 +1,10 @@
 import { createStore } from 'vuex'
 import customBoard from "./modules/customBoard";
 import staticBoard from "./modules/staticBoard";
+import songComment from "./modules/songComment";
 
 export default createStore({
-    modules: {customBoard, staticBoard},
+    modules: {customBoard, staticBoard, songComment},
     state: {
         songInfo: new Map(),
         categoryName: new Map()

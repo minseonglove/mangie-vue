@@ -43,12 +43,12 @@
       </div>
       <div ref="capture">
         <!--페이지를 넘기는 기능과 페이지에 맞는 타이틀 이미지를 추가하자-->
-        <div class="boardTitle boardImage"/>
         <board-template v-show="!isCustomBoard"/>
         <custom-board v-show="isCustomBoard"/>
       </div>
       <create-custom-thumbnail class="createBox" v-if="isCustomBoard" :songs="songList"/>
     </div>
+    <song-comment v-if="isSongComment"/>
   </div>
 </template>
 <script>
@@ -68,6 +68,7 @@ import BoardTemplate from "./components/boardTemplate";
 import CustomBoard from "./components/custom-board";
 import {useStore} from "vuex";
 import localforage from "localforage";
+import SongComment from "./components/song-comment";
 
 const store = useStore()
 const boardTitle = ['4B 13LV', '4B 14LV', '4B 15LV',
@@ -170,6 +171,9 @@ const isCustomBoard = computed(()=> {
   return currentPage.value === 12
 })
 
+const isSongComment = computed(() => {
+  return store.state.songComment.show
+})
 const reactiveWidth = function () {
   test.value = window.innerWidth
 }

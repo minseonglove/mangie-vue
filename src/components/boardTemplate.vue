@@ -1,4 +1,5 @@
 <template>
+  <div ref="bt" class="boardTitle boardImage"/>
   <div class="board">
     <div v-for="(difficulty, grade) in board" :key="grade">
       <div class="grade">
@@ -7,7 +8,7 @@
         </div>
         <div class="levelBox">
           <div class="thumbBox" v-for="thumb in difficulty" :key="thumb" v-on:mouseover="getSongInfo(thumb)">
-            <div class="thumbWrap">
+            <div class="thumbWrap" v-on:click="showSongComment">
               <img class="sName" :src="require(`@/assets/img/thumbnails/${thumb.category}/${thumb.songName}.webp`)" alt="썸네일"
                    v-on:mouseover="showSongInfo($event)" v-on:mouseleave="hideSongInfo">
               <img class="sLevel" :src="require(`@/assets/img/level/${thumb.songLevel}.webp`)" alt="난이도">
@@ -34,17 +35,20 @@ export default {
 import {computed, ref, watch} from "vue";
 import {useStore} from "vuex";
   const info = ref(null)
+  const bt = ref(null)
   const store = useStore()
   let songInfoVisible = ref(false)
   let songInfoName = ref('')
   let songInfoCategory = ref('')
   let targetThumbnail = null
+  let btRect = null
 
   const showSongInfo = (event) => {
     songInfoVisible.value = true
-    targetThumbnail = event.target
-    info.value.style.top = targetThumbnail.offsetTop + "px"
-    info.value.style.left = targetThumbnail.offsetLeft + "px"
+    targetThumbnail = event.target.getBoundingClientRect()
+    btRect = bt.value.getBoundingClientRect()
+    info.value.style.top = targetThumbnail.top - btRect.top - 58 + "px"
+    info.value.style.left = targetThumbnail.left - btRect.left + 200 + "px"
     window.addEventListener('scroll', moveInfoBox)
   }
   const hideSongInfo = () => {
@@ -58,18 +62,15 @@ import {useStore} from "vuex";
     songInfoCategory.value = info.category
   }
   const moveInfoBox = function () {
-    info.value.style.top = targetThumbnail.offsetTop + "px"
+    info.value.style.top = targetThumbnail.top - btRect.top + "px"
+  }
+
+  const showSongComment = () =>{
+    store.commit('songComment/setShow', true)
   }
 
   const board = computed(() => store.getters["staticBoard/selectedBoard"])
   watch(()=>songInfoVisible.value, (newVal) => info.value.style.visibility = newVal ? "visible" : "hidden")
 </script>
 <style scoped>
-.infoBox{
-  position: fixed;
-  z-index: 999;
-  background-color: white;
-  font-size: 12px;
-  font-weight: bold;
-}
 </style>

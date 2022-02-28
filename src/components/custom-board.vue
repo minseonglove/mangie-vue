@@ -1,4 +1,5 @@
 <template>
+  <div class="boardTitle boardImage"/>
   <div class="board">
     <div v-for="(difficulty, grade) in board" v-bind:key="grade">
       <div class="grade">
