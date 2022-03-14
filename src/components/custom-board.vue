@@ -5,19 +5,25 @@
         <div class="gradeBox" v-on:click="setCurrentGrade(grade)">
           <p>{{board.length - grade}}</p>
         </div>
-        <transition-group tag="div" class="levelBox" name="list">
-          <div class="cbBox" v-for="thumb in difficulty" v-bind:key="thumb.id" v-on:click="deleteThumb(grade, thumb.id)">
-            <thumbnail-card :info="thumb"/>
-            <input class="judgeBox" type="text" placeholder="-- . -- %" v-model="thumb.judgement">
-          </div>
-        </transition-group>
+        <draggable class="levelBox" v-model="board[grade]">
+          <transition-group name="list">
+            <div class="cbBox" v-for="thumb in board[grade]" v-bind:key="thumb.id">
+              <thumbnail-card :info="thumb" v-on:click="deleteThumb(grade, thumb.id)"/>
+              <input class="judgeBox" type="text" placeholder="-- . -- %" v-model="thumb.judgement">
+            </div>
+          </transition-group>
+        </draggable>
       </div>
     </div>
   </div>
 </template>
 <script>
+import {VueDraggableNext} from 'vue-draggable-next'
 export default {
-  name: "custom-board"
+  name: "custom-board",
+  components:{
+    draggable: VueDraggableNext
+  }
 }
 </script>
 <script setup>
@@ -56,6 +62,9 @@ export default {
 .list-leave-to{
   opacity: 0;
   transform: translateY(30px);
+}
+.list-move{
+  transition: transform 0.3s;
 }
 @keyframes bounce-in {
   0%{
