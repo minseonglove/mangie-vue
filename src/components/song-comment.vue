@@ -13,6 +13,8 @@ export default {
 #comment_main{
   position: fixed;
   background-color: #dcdcdc;
+  border-width: 1px;
+  border-color: #c4c4c4;
   border-radius: 20%;
   width: 500px;
   height: 500px;

@@ -42,6 +42,7 @@
     z-index: 999;
     background-color: white;
     border-radius: 15%;
+    border: 2px solid black;
     opacity: 0.7;
 }
 .infoBox>p{
@@ -58,33 +59,6 @@
     position: relative;
     margin-bottom: 40px;
     margin-left: 16px;
-}
-.thumbWrap{
-    display: block;
-    width: 100%;
-    height: 100%;
-}
-.thumbWrap:hover{
-    cursor: pointer;
-}
-.thumbWrap>.sName{
-    position: absolute;
-    top: 4px;
-    left: 4px;
-    border: 1px solid white;
-    z-index: 1;
-}
-.thumbWrap>.sLevel{
-    position: absolute;
-    top: 4px;
-    right: 4px;
-    z-index: 2;
-}
-.thumbWrap>.sBorder{
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 0;
 }
 .boardTitle{
     width: 100%;

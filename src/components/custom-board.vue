@@ -1,5 +1,4 @@
 <template>
-  <div class="boardTitle boardImage"/>
   <div class="board">
     <div v-for="(difficulty, grade) in board" v-bind:key="grade">
       <div class="grade">
@@ -8,11 +7,7 @@
         </div>
         <transition-group tag="div" class="levelBox" name="list">
           <div class="cbBox" v-for="thumb in difficulty" v-bind:key="thumb.id" v-on:click="deleteThumb(grade, thumb.id)">
-            <div class="thumbWrap">
-              <img class="sName" :src="require(`@/assets/img/thumbnails/${thumb.category}/${thumb.songName}.webp`)" alt="썸네일">
-              <img class="sLevel" :src="require(`@/assets/img/level/${thumb.songLevel}.webp`)" alt="난이도" draggable="false">
-              <img class="sBorder" :src="require(`@/assets/img/border/${thumb.category}.webp`)" alt="카데고리" draggable="false">
-            </div>
+            <thumbnail-card :info="thumb"/>
             <input class="judgeBox" type="text" placeholder="-- . -- %" v-model="thumb.judgement">
           </div>
         </transition-group>
@@ -28,6 +23,7 @@ export default {
 <script setup>
   import {useStore} from "vuex";
   import {computed} from "vue";
+  import ThumbnailCard from "./thumbnail-card";
   const store = useStore()
   const mangiePopup = document.getElementsByClassName("gradeSelect")
   const setCurrentGrade = (currentGrade) => {

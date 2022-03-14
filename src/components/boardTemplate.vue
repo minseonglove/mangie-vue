@@ -7,13 +7,8 @@
           <p>{{board.length - grade}}</p>
         </div>
         <div class="levelBox">
-          <div class="thumbBox" v-for="thumb in difficulty" :key="thumb" v-on:mouseover="getSongInfo(thumb)">
-            <div class="thumbWrap" v-on:click="showSongComment">
-              <img class="sName" :src="require(`@/assets/img/thumbnails/${thumb.category}/${thumb.songName}.webp`)" alt="썸네일"
-                   v-on:mouseover="showSongInfo($event)" v-on:mouseleave="hideSongInfo">
-              <img class="sLevel" :src="require(`@/assets/img/level/${thumb.songLevel}.webp`)" alt="난이도">
-              <img class="sBorder" :src="require(`@/assets/img/border/${thumb.category}.webp`)" alt="카데고리">
-            </div>
+          <div class="thumbBox" v-for="thumb in difficulty" :key="thumb">
+            <thumbnail-card :info="thumb" v-on:click="showSongComment" v-on:mouseover.prevent="showSongInfo($event, thumb)" v-on:mouseleave="hideSongInfo"/>
             <input class="judgeBox" type="text" placeholder="-- . -- %" v-model="thumb.judgement">
           </div>
         </div>
@@ -34,6 +29,7 @@ export default {
 <script setup>
 import {computed, ref, watch} from "vue";
 import {useStore} from "vuex";
+import ThumbnailCard from "./thumbnail-card";
   const info = ref(null)
   const bt = ref(null)
   const store = useStore()
@@ -43,23 +39,22 @@ import {useStore} from "vuex";
   let targetThumbnail = null
   let btRect = null
 
-  const showSongInfo = (event) => {
-    songInfoVisible.value = true
-    targetThumbnail = event.target.getBoundingClientRect()
-    btRect = bt.value.getBoundingClientRect()
-    info.value.style.top = targetThumbnail.top - btRect.top - 58 + "px"
-    info.value.style.left = targetThumbnail.left - btRect.left + 200 + "px"
-    window.addEventListener('scroll', moveInfoBox)
-  }
   const hideSongInfo = () => {
     songInfoVisible.value = false
     window.addEventListener('scroll', moveInfoBox)
   }
-  const getSongInfo = (thumb) => {
-    //songname을 키로 갖는 맵이 필요하다
-    const info = store.getters.songInfo(thumb.songName)
-    songInfoName.value = info.name
-    songInfoCategory.value = info.category
+  const showSongInfo = (event, thumb) => {
+    if(!songInfoVisible.value){
+      const currentSong = store.getters.songInfo(thumb.songName)
+      songInfoName.value = currentSong.name
+      songInfoCategory.value = currentSong.category
+      targetThumbnail = event.currentTarget.getBoundingClientRect()
+      btRect = bt.value.getBoundingClientRect()
+      info.value.style.top = targetThumbnail.top - btRect.top - 58 + "px"
+      info.value.style.left = targetThumbnail.left - btRect.left + 200 + "px"
+      window.addEventListener('scroll', moveInfoBox)
+      songInfoVisible.value = true
+    }
   }
   const moveInfoBox = function () {
     info.value.style.top = targetThumbnail.top - btRect.top + "px"
