@@ -29,13 +29,13 @@ export default {
   top: 4px;
   left: 4px;
   border: 1px solid white;
-  z-index: 1;
+  z-index: 2;
 }
 .thumbWrap>.sLevel{
   position: absolute;
   top: 4px;
   right: 4px;
-  z-index: 2;
+  z-index: 3;
 }
 .thumbWrap>.sBorder{
   position: absolute;

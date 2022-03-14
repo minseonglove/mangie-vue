@@ -45,6 +45,7 @@ import ThumbnailCard from "./thumbnail-card";
   }
   const showSongInfo = (event, thumb) => {
     if(!songInfoVisible.value){
+      songInfoVisible.value = true
       const currentSong = store.getters.songInfo(thumb.songName)
       songInfoName.value = currentSong.name
       songInfoCategory.value = currentSong.category
@@ -53,7 +54,6 @@ import ThumbnailCard from "./thumbnail-card";
       info.value.style.top = targetThumbnail.top - btRect.top - 58 + "px"
       info.value.style.left = targetThumbnail.left - btRect.left + 200 + "px"
       window.addEventListener('scroll', moveInfoBox)
-      songInfoVisible.value = true
     }
   }
   const moveInfoBox = function () {

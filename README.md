@@ -1,24 +1,4 @@
-# mangie-vue
-
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+리듬게임 DJMAX Respect V의 개인 기록을 저장하는 사이트 입니다.   
+Vue Version : 3.0   
+Build : Webpack   
+Library : vuex, axios, localforage, html2canvas   
