@@ -10,7 +10,7 @@ export default createStore({
         categoryName: new Map()
     },
     getters: {
-        songInfo: (state) => (file_name) => state.songInfo.get(file_name)
+        songInfo: (state) => (file_name: string) => state.songInfo.get(file_name)
     },
     mutations: {
         initSongInfo(state, songList) {
@@ -29,7 +29,7 @@ export default createStore({
             categoryName.set("vextension", "V EXTENSION II")
             categoryName.set("collaboration", "Collaboration")
 
-            for(let song of songList[0])
+            for(const song of songList[0])
                 state.songInfo.set(song.file_name, {name: song.song_name, category: categoryName.get(song.category)})
         }
     },

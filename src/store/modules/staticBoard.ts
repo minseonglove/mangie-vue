@@ -1,3 +1,8 @@
+interface RootState {
+    board: {id: number, category: string, songName: string, songLevel: string, judgement: string}[][][],
+    now: number
+}
+
 const state = {
     board: [[[]], [[]], [[]],
         //5B 13LV
@@ -7059,23 +7064,23 @@ const state = {
 }
 
 const getters = {
-    selectedBoard: (state) => state.board[state.now],
-    board: (state) => state.board,
-    now: (state) => state.now
+    selectedBoard: (state: RootState) => state.board[state.now],
+    board: (state: RootState) => state.board,
+    now: (state: RootState) => state.now
 }
 
 const mutations = {
-    setPage(state, now){
+    setPage(state: RootState, now: number){
         state.now = now
     },
-    setBoard(state, board){
+    setBoard(state: RootState, board: []){
         state.board = board
     },
-    initBoard(state, userInfo){ //유저의 입력을 저장한 스토리지가 있다면 judgement를 초기화 해줍니다
-        for(let info of userInfo){
-            for(let i in state.board[info.idx]){
+    initBoard(state: RootState, userInfo: {idx: number, id: number, judgement: string}[]){ //유저의 입력을 저장한 스토리지가 있다면 judgement를 초기화 해줍니다
+        for(const info of userInfo){
+            for(const i in state.board[info.idx]){
                 let flag = false
-                for(let j in state.board[info.idx][i]){
+                for(const j in state.board[info.idx][i]){
                     if(state.board[info.idx][i][j].id === info.id){
                         state.board[info.idx][i][j].judgement = info.judgement
                         flag = true

@@ -25,6 +25,7 @@
     <br>
     <button class="makeBox" v-on:click="createT">만들기</button>
     <button class="makeBox" v-on:click="createNG">다음등급</button>
+    <button class="makeBox" v-on:click="cleanBD">초기화</button>
   </div>
 </template>
 
@@ -58,7 +59,7 @@ export default {
       songLevel: selDiff.value})
   }
   const createNG = () => store.commit('customBoard/createNextGrade')
-
+  const cleanBD = () => store.commit('customBoard/cleanBoard')
   watch(search, () =>{
     const searchTrim = search.value.replaceAll(' ', '')
     if(searchTrim.length !== 0)

@@ -3,11 +3,11 @@ const state = {
 }
 
 const getters = {
-    getShow: (state) => state.show
+    getShow: (state: {show: boolean}) => state.show
 }
 
 const mutations = {
-    setShow (state, show){
+    setShow (state: {show: boolean}, show: boolean){
         state.show = show
     }
 }

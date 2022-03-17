@@ -69,7 +69,6 @@ import CustomBoard from "./components/custom-board";
 import {useStore} from "vuex";
 import localforage from "localforage";
 import SongComment from "./components/song-comment";
-
 const store = useStore()
 const boardTitle = ['4B 13LV', '4B 14LV', '4B 15LV',
   '5B 13LV', '5B 14LV', '5B 15LV',
@@ -84,7 +83,6 @@ onMounted(()=>{
   const main = document.getElementById('main')
   const header = document.getElementById('main_header')
   main.style.setProperty('margin-top', 'calc(' + header.clientHeight + 'px +' + ' 7vh)')
-
   initMenu()
   initInfo()
   //페이지 크기 감지를 위한 이벤트
@@ -98,7 +96,6 @@ const initMenu = () => {
   const allMenu = document.getElementById('allMenu')
   const header = document.getElementById('main_header')
   const allBg = document.getElementById('allMenuWrapBg')
-
   allMenu.addEventListener('click', (event) => {
     event.preventDefault()
     if(String(header.classList) !== 'active'){
@@ -145,7 +142,6 @@ const setStorage = function () {
   //이유는 모르겠으나 깊은 복사로 하지않으면 들어가지 않습니다
   localforage.setItem('saveCustomBoard', JSON.parse(JSON.stringify(store.getters['customBoard/difficultyBoard'])))
 }
-
 /*서열표 캡쳐*/
 const saveScreenShot = () => {
   html2canvas(capture.value).then(canvas => {
@@ -166,11 +162,9 @@ const setPage = (page) => {
   const menu = document.getElementById('allMenu')
   menu.click()
 }
-
 const isCustomBoard = computed(()=> {
   return currentPage.value === 12
 })
-
 const isSongComment = computed(() => {
   return store.state.songComment.show
 })

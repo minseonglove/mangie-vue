@@ -59,6 +59,7 @@
     position: relative;
     margin-bottom: 40px;
     margin-left: 16px;
+    transition: all 0.3s ease-in-out;
 }
 .boardTitle{
     width: 100%;
